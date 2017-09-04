@@ -11,10 +11,10 @@ zlib License.
 Target environments
 -------------------
 
-Windows, Linux, Mac OS X.
+Windows, Linux, macOS, etc.
 
 SBEAML is written in ISO C99 (to be precise, ISO C90 with stdbool.h/stdint.h),
-and so probably works fine on other OS.
+and so probably works fine on other OS and bare metal environment.
 
 Usage
 -----
