@@ -2,14 +2,14 @@
 /**
  * @brief   SBEAML: event ID definitions (sample && test application).
  * @author  eel3
- * @date    2017-09-03
+ * @date    2017-09-04
  */
 /* ********************************************************************** */
 
 #ifndef EVENT_ID_H_INCLUDED
 #define EVENT_ID_H_INCLUDED
 
-#include "sbeaml.h"
+#include <stdint.h>
 
 /* ---------------------------------------------------------------------- */
 /* Data types */
