@@ -45,18 +45,18 @@ event_handler_on_event(void * const user_data, const SBEAML_EVENT_ID id)
         (void) printf("%s->event_handler->on_event(): ignore pop-handler\n", s);
         break;
     case EVENT_BIT_CMD_SET_TIMER:
-    (void) sbeaml_SetTimer((SBEAML_TIMER_ID) ((bits & EVENT_BITMASK_TIMER_ID) >> 16),
-                           (SBEAML_SYS_TICK_MSEC) (bits & EVENT_BITMASK_TIMER_TIMEOUT),
-                           (bits & EVENT_BITMASK_TIMER_REPEAT) != 0 ? true : false);
+        (void) sbeaml_SetTimer((SBEAML_TIMER_ID) ((bits & EVENT_BITMASK_TIMER_ID) >> 16),
+                               (SBEAML_SYS_TICK_MSEC) (bits & EVENT_BITMASK_TIMER_TIMEOUT),
+                               (bits & EVENT_BITMASK_TIMER_REPEAT) != 0 ? true : false);
         break;
     case EVENT_BIT_CMD_KILL_TIMER:
         (void) sbeaml_KillTimer((SBEAML_TIMER_ID) ((bits & EVENT_BITMASK_TIMER_ID) >> 16));
         break;
     case EVENT_BIT_CMD_SET_GTIMER:
-    (void) sbeaml_SetGlobalTimer((SBEAML_TIMER_ID) ((bits & EVENT_BITMASK_TIMER_ID) >> 16),
-                                 (SBEAML_SYS_TICK_MSEC) (bits & EVENT_BITMASK_TIMER_TIMEOUT),
-                                 (bits & EVENT_BITMASK_TIMER_REPEAT) != 0 ? true : false,
-                                 &global_timer_handler);
+        (void) sbeaml_SetGlobalTimer((SBEAML_TIMER_ID) ((bits & EVENT_BITMASK_TIMER_ID) >> 16),
+                                     (SBEAML_SYS_TICK_MSEC) (bits & EVENT_BITMASK_TIMER_TIMEOUT),
+                                     (bits & EVENT_BITMASK_TIMER_REPEAT) != 0 ? true : false,
+                                     &global_timer_handler);
         break;
     case EVENT_BIT_CMD_KILL_GTIMER:
         (void) sbeaml_KillGlobalTimer((SBEAML_TIMER_ID) ((bits & EVENT_BITMASK_TIMER_ID) >> 16));
