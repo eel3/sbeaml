@@ -33,7 +33,6 @@ public:
         m_cond.notify_one();
     }
 
-#if 1
     bool pop(T& val) {
         std::lock_guard<std::mutex> lck(m_mutex);
         if (m_queue.empty()) {
@@ -43,21 +42,6 @@ public:
         m_queue.pop();
         return true;
     }
-#else
-    bool pop(T& val) {
-        using std::chrono::milliseconds;
-
-        std::unique_lock<std::mutex> lck(m_mutex);
-        const auto have_some = m_cond.wait_for(lck, milliseconds { 1 }, [this] {
-            return !m_queue.empty();
-        });
-        if (have_some) {
-            val = m_queue.front();
-            m_queue.pop();
-        }
-        return have_some;
-    }
-#endif
 };
 
 #endif /* ndef MAILBOX_H_INCLUDED */
