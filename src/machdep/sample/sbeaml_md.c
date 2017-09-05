@@ -2,14 +2,19 @@
 /**
  * @brief   SBEAML: machdep implementation (sample code).
  * @author  eel3
- * @date    2017-09-01
+ * @date    2017-09-05
  */
 /* ********************************************************************** */
 
 #include "sbeaml_md.h"
 
-#include <assert.h>
 #include <stddef.h>
+
+#ifdef SBEAML_CFG_USE_ASSERT_H
+#include <assert.h>
+#else
+#define assert(cond)
+#endif
 
 /* ---------------------------------------------------------------------- */
 /* Data structures */

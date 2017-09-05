@@ -2,7 +2,7 @@
 /**
  * @brief   SBEAML: configurations (sample code).
  * @author  eel3
- * @date    2017-08-31
+ * @date    2017-09-05
  */
 /* ********************************************************************** */
 
@@ -18,6 +18,11 @@
 
 /** Maximum number of global timers. */
 #define SBEAML_CFG_MAX_GLOBAL_TIMER 8
+
+#if 0
+/** Use C standard library's assert.h (for debug on hosted environment). */
+#define SBEAML_CFG_USE_ASSERT_H
+#endif
 
 /* ---------------------------------------------------------------------- */
 /* Configurations for the machdep library (for sample code only) */

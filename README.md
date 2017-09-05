@@ -14,7 +14,10 @@ Target environments
 Windows, Linux, macOS, etc.
 
 SBEAML is written in ISO C99 (to be precise, ISO C90 with stdbool.h/stdint.h),
-and so probably works fine on other OS and bare metal environment.
+and so probably works fine on other OS.
+
+In addition, C standard library functions used in SBEAML are stdbool.h/stddef.h/stdint.h.
+So SBEAML probably works on bare metal environment.
 
 Usage
 -----
