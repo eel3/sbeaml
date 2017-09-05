@@ -1,4 +1,4 @@
-SBEAML; Stack-Based Embeddable Application Main Loop
+SBEAML: Stack-Based Embeddable Application Main Loop
 ====================================================
 
 Simple framework for embedded C/C++ application.
