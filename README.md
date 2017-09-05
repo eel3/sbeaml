@@ -1,7 +1,7 @@
-SBEAML
-======
+SBEAML; Stack-Based Embeddable Application Main Loop
+====================================================
 
-Stack-Based Embeddable Application Main Loop.
+Simple framework for embedded C/C++ application.
 
 License
 -------
