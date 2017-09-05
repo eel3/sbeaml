@@ -1,6 +1,6 @@
 # @brief   SBEAML: Makefile for sample application (Unix GCC)
 # @author  eel3
-# @date    2017-08-31
+# @date    2017-09-05
 
 # ---------------------------------------------------------------------
 
@@ -8,8 +8,8 @@ PREFIX         :=
 CC             := $(PREFIX)$(CC)
 
 CFLAGS          =
-LDFLAGS         =
-LDLIBS         :=
+LDFLAGS         = -pthread
+LDLIBS         := -lstdc++
 
 CCDEFS          =
 OBJADD         :=
