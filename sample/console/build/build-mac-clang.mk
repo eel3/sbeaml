@@ -1,6 +1,6 @@
 # @brief   SBEAML: Makefile for sample application (macOS clang)
 # @author  eel3
-# @date    2017-08-31
+# @date    2017-09-05
 
 # ---------------------------------------------------------------------
 
@@ -9,7 +9,7 @@ CC             := $(PREFIX)$(CC)
 
 CFLAGS          =
 LDFLAGS         =
-LDLIBS         :=
+LDLIBS         := -lc++
 
 CCDEFS          =
 OBJADD         :=
