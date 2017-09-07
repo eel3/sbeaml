@@ -2,11 +2,12 @@
 /**
  * @brief   SBEAML: machdep implementation (sample code).
  * @author  eel3
- * @date    2017-09-05
+ * @date    2017-09-07
  */
 /* ********************************************************************** */
 
 #include "sbeaml_md.h"
+#include "sbeaml_md_eq.h"
 
 #include <stddef.h>
 
@@ -20,12 +21,21 @@
 /* Data structures */
 /* ---------------------------------------------------------------------- */
 
+/** Event queue type. */
+typedef struct {
+    SBEAML_EVENT_ID buf[SBEAML_CFG_EVENT_QUEUE_SIZE + 1];
+    size_t rp;
+    size_t wp;
+} EVENT_QUEUE;
+
 /** Module context type. */
 typedef struct {
     bool initialized;
     bool prepared;
     SBEAML_EVENT_HANDLER_CELL handlers[SBEAML_CFG_MAX_EVENT_HANDLER];
     SBEAML_MESSAGE_CELL messages[SBEAML_CFG_MAX_MESSAGE];
+
+    EVENT_QUEUE queue;
 } MODULE_CTX;
 
 /* ---------------------------------------------------------------------- */
@@ -51,7 +61,95 @@ static MODULE_CTX module_ctx;
 #define NELEMS(array) (sizeof(array) / sizeof((array)[0]))
 
 /* ---------------------------------------------------------------------- */
-/* Functions */
+/* Private functions: event queue */
+/* ---------------------------------------------------------------------- */
+
+/* ====================================================================== */
+/**
+ * @brief  Return a next index.
+ *
+ * @param[in] q  Event queue.
+ * @param[in] i  Current index.
+ *
+ * @return  The next index.
+ */
+/* ====================================================================== */
+#define eq_NextIndex(q, i) (((i) + 1) % NELEMS((q)->buf))
+
+/* ====================================================================== */
+/**
+ * @brief  Initialize EVENT_QUEUE members.
+ *
+ * @param[out] q  Event queue.
+ */
+/* ====================================================================== */
+static void
+eq_Initialize(EVENT_QUEUE * const q)
+{
+    assert(q != NULL);
+
+    q->rp = q->wp = 0;
+}
+
+/* ====================================================================== */
+/**
+ * @brief  Push data to the event queue.
+ *
+ * @param[in,out] q    Event queue.
+ * @param[in]     val  Data.
+ *
+ * @retval true   Exit success.
+ * @retval false  Exit failure.
+ */
+/* ====================================================================== */
+static bool
+eq_Push(EVENT_QUEUE * const q, const SBEAML_EVENT_ID val)
+{
+    size_t wp_next;
+
+    assert(q != NULL);
+
+    wp_next = eq_NextIndex(q, q->wp);
+    if (wp_next == q->rp) {
+        /* Queue is full. */
+        return false;
+    }
+
+    q->buf[q->wp] = val;
+    q->wp = wp_next;
+
+    return true;
+}
+
+/* ====================================================================== */
+/**
+ * @brief  Pop data from the event queue.
+ *
+ * @param[in,out] q    Event queue.
+ * @param[out]    val  Data output place.
+ *
+ * @retval true   Exit success.
+ * @retval false  Exit failure.
+ */
+/* ====================================================================== */
+static bool
+eq_Pop(EVENT_QUEUE * const q, SBEAML_EVENT_ID * const val)
+{
+    assert((q != NULL) && (val != NULL));
+
+    if (q->rp == q->wp) {
+        /* Queue is empty. */
+        return false;
+    }
+
+    *val = q->buf[q->rp];
+    q->rp = eq_NextIndex(q, q->rp);
+
+    return true;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Public API Functions: for SBEAML library */
 /* ---------------------------------------------------------------------- */
 
 /* ********************************************************************** */
@@ -130,6 +228,8 @@ sbeaml_md_PrepareBeforeMainLoop(void)
     for (i = 0; i < NELEMS(mc->messages); i++) {
         mc->messages[i].empty = true;
     }
+
+    eq_Initialize(&mc->queue);
 
     mc->prepared = true;
 
@@ -277,11 +377,20 @@ sbeaml_md_GetTick(void)
 SBEAML_EVENT_ID
 sbeaml_md_PeekEvent(void)
 {
-    assert(module_ctx.initialized);
+    MODULE_CTX * const mc = &module_ctx;
+    SBEAML_EVENT_ID id;
 
-    /* TODO: Need to implement this function. */
+    assert(mc->initialized);
 
-    return SBEAML_EVENT_ID_NONE;
+    if (!mc->prepared) {
+        return SBEAML_EVENT_ID_NONE;
+    }
+
+    if (!eq_Pop(&mc->queue, &id)) {
+        return SBEAML_EVENT_ID_NONE;
+    }
+
+    return id;
 }
 
 /* ********************************************************************** */
@@ -308,4 +417,32 @@ sbeaml_md_UnlockForAPI(void)
     assert(module_ctx.initialized);
 
     /* TODO: Need to implement this function. */
+}
+
+/* ---------------------------------------------------------------------- */
+/* Public API Functions: for submodules */
+/* ---------------------------------------------------------------------- */
+
+/* ********************************************************************** */
+/**
+ * @brief  Post event ID to the event queue.
+ *
+ * @param[in] id  Event ID.
+ *
+ * @retval true   Exit success.
+ * @retval false  Exit failure.
+ */
+/* ********************************************************************** */
+bool
+sbeaml_md_PostEvent(const SBEAML_EVENT_ID id)
+{
+    MODULE_CTX * const mc = &module_ctx;
+
+    assert(mc->initialized);
+
+    if (!mc->prepared) {
+        return false;
+    }
+
+    return eq_Push(&mc->queue, id);
 }

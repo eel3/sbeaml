@@ -2,7 +2,7 @@
 /**
  * @brief   SBEAML: configurations (sample code).
  * @author  eel3
- * @date    2017-09-05
+ * @date    2017-09-07
  */
 /* ********************************************************************** */
 
@@ -33,5 +33,8 @@
 
 /** Maximum number of messages. */
 #define SBEAML_CFG_MAX_MESSAGE 16
+
+/** Maximum size of event queue. */
+#define SBEAML_CFG_EVENT_QUEUE_SIZE 32
 
 #endif /* ndef SBEAML_CONFIG_H_INCLUDED */
