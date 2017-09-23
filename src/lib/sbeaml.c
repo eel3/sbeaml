@@ -2,7 +2,7 @@
 /**
  * @brief   SBEAML: public API implementation.
  * @author  eel3
- * @date    2017-09-05
+ * @date    2017-09-23
  */
 /* ********************************************************************** */
 
@@ -465,7 +465,6 @@ push_root_event_handler(MODULE_CTX * const mc,
                         const SBEAML_EVENT_HANDLER * const root_handler)
 {
     SBEAML_EVENT_HANDLER_CELL *cell;
-    SBEAML_EVENT_HANDLER *handler;
 
     assert((mc != NULL) && (root_handler != NULL));
 
@@ -480,10 +479,6 @@ push_root_event_handler(MODULE_CTX * const mc,
 
     mc->top_handler_cell = cell;
     mc->next_top_handler_cell = cell;
-
-    handler = &cell->handler;
-    handler->on_init(handler->user_data);
-    handler->on_appear(handler->user_data);
 
     return SBEAML_E_OK;
 }
@@ -1203,6 +1198,7 @@ sbeaml_PrepareBeforeMainLoop(const SBEAML_PREPARE_PARAMS * const params)
 {
     MODULE_CTX * const mc = &module_ctx;
     SBEAML_ERR err;
+    SBEAML_EVENT_HANDLER *handler;
 
     if (params == NULL) {
         return SBEAML_E_PRM;
@@ -1232,6 +1228,10 @@ sbeaml_PrepareBeforeMainLoop(const SBEAML_PREPARE_PARAMS * const params)
     initialize_global_timers(mc);
 
     mc->prepared = true;
+
+    handler = &mc->top_handler_cell->handler;
+    handler->on_init(handler->user_data);
+    handler->on_appear(handler->user_data);
 
     return SBEAML_E_OK;
 }
