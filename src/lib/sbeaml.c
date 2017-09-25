@@ -2,7 +2,7 @@
 /**
  * @brief   SBEAML: public API implementation.
  * @author  eel3
- * @date    2017-09-23
+ * @date    2017-09-25
  */
 /* ********************************************************************** */
 
@@ -1255,6 +1255,8 @@ sbeaml_ResumeAndYield(void)
     if (!mc->prepared) {
         return SBEAML_E_STATUS;
     }
+
+    update_event_handler_stack(mc);
 
     process_event(mc);
     process_timers(mc);
