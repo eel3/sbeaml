@@ -645,10 +645,6 @@ update_event_handler_stack(MODULE_CTX * const mc)
  * @brief  Remove all event handlers from the stack (including root handler).
  *
  * @param[in,out] mc  Module context.
- *
- * @retval SBEAML_E_OK      Exit success.
- * @retval SBEAML_E_NG      Exit failure (perhaps stack is empty).
- * @retval SBEAML_E_STATUS  Internal status error.
  */
 /* ====================================================================== */
 static void
@@ -1190,6 +1186,7 @@ sbeaml_Finalize(void)
  *
  * @retval SBEAML_E_OK      Exit success.
  * @retval SBEAML_E_PRM     Parameter error (perhaps arguments error).
+ * @retval SBEAML_E_RES     No system resources.
  * @retval SBEAML_E_STATUS  Internal status error.
  */
 /* ********************************************************************** */

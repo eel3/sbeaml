@@ -128,6 +128,7 @@ sbeaml_Finalize(void);
  *
  * @retval SBEAML_E_OK      Exit success.
  * @retval SBEAML_E_PRM     Parameter error (perhaps arguments error).
+ * @retval SBEAML_E_RES     No system resources.
  * @retval SBEAML_E_STATUS  Internal status error.
  */
 /* ********************************************************************** */
