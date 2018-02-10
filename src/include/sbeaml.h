@@ -2,7 +2,7 @@
 /**
  * @brief   SBEAML: public API interfaces.
  * @author  eel3
- * @date    2017-09-01
+ * @date    2018-01-29
  */
 /* ********************************************************************** */
 
@@ -15,6 +15,8 @@
 #else  /* def __cplusplus */
 #   include <stdbool.h>
 #endif /* def __cplusplus */
+
+#include "sbeaml_types.h"
 
 /* ---------------------------------------------------------------------- */
 /* Error type and codes */
@@ -34,11 +36,6 @@ typedef int32_t SBEAML_ERR;
 /* ---------------------------------------------------------------------- */
 /* Data types */
 /* ---------------------------------------------------------------------- */
-
-/** Event ID type (must be greater than or equal to 0). */
-typedef int32_t SBEAML_EVENT_ID;
-/** "No event happen" event ID value. */
-#define SBEAML_EVENT_ID_NONE (-1)
 
 /** Event handler tag type (must be greater than 0). */
 typedef int32_t SBEAML_EVENT_HANDLER_TAG;
