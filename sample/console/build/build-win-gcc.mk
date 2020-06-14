@@ -1,6 +1,6 @@
 # @brief   SBEAML: Makefile for sample application (Windows MinGW/TDM-GCC)
 # @author  eel3
-# @date    2017-08-31
+# @date    2020-05-31
 
 # ---------------------------------------------------------------------
 
@@ -9,7 +9,7 @@ CC             := $(PREFIX)gcc
 
 CFLAGS          =
 LDFLAGS         =
-LDLIBS         :=
+LDLIBS         := -lstdc++
 
 CCDEFS          =
 OBJADD         :=
