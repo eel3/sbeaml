@@ -2,7 +2,7 @@
 /**
  * @brief   SBEAML: public API interfaces.
  * @author  eel3
- * @date    2018-01-29
+ * @date    2021-04-15
  */
 /* ********************************************************************** */
 
@@ -44,9 +44,6 @@ typedef int32_t SBEAML_EVENT_HANDLER_TAG;
 
 /** Timer ID type (must be greater than or equal to 0). */
 typedef uint32_t SBEAML_TIMER_ID;
-
-/** System tick type (milliseconds). */
-typedef int32_t SBEAML_SYS_TICK_MSEC;
 
 /* ---------------------------------------------------------------------- */
 /* Data structures */
